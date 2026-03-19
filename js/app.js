@@ -35,14 +35,14 @@ const StrideApp = (() => {
     if (state.user) {
       const cartKey = getStorageKey('stride_cart');
       const wishlistKey = getStorageKey('stride_wishlist');
-      
+
       state.cart = JSON.parse(localStorage.getItem(cartKey) || '[]');
       state.wishlist = JSON.parse(localStorage.getItem(wishlistKey) || '[]');
     } else {
       state.cart = [];
       state.wishlist = [];
     }
-    
+
     updateCartUI();
     renderCartItems();
     renderWishlistItems();
@@ -58,22 +58,22 @@ const StrideApp = (() => {
   function logout() {
     state.user = null;
     localStorage.removeItem('stride_user');
-    
-    // Limpar carrinho e wishlist ao deslogar
+
+    // Limpar sacola e wishlist ao deslogar
     state.cart = [];
     state.wishlist = [];
-    
+
     // Fechar drawers se estiverem abertos
     closeDrawer('cart-drawer');
     closeDrawer('wishlist-drawer');
-    
+
     // Atualizar todas as interfaces
     updateUserUI();
     updateCartUI();
     renderCartItems();
     renderWishlistItems();
     syncWishlistButtons();
-    
+
     showToast('Até logo! Você saiu da conta.', 'info');
   }
 
@@ -103,7 +103,7 @@ const StrideApp = (() => {
     }
     saveCart();
     updateCartUI();
-    showToast(`${product.name} adicionado ao carrinho!`, 'success');
+    showToast(`${product.name} adicionado à sacola!`, 'success');
   }
 
   function removeFromCart(id, size) {
@@ -197,7 +197,7 @@ const StrideApp = (() => {
     if (!container) return;
 
     if (state.cart.length === 0) {
-      container.innerHTML = '<p class="cart-empty">Seu carrinho está vazio.</p>';
+      container.innerHTML = '<p class="cart-empty">Sua sacola está vazia.</p>';
       if (totalEl) totalEl.textContent = 'R$ 0,00';
       return;
     }
@@ -604,7 +604,7 @@ const StrideApp = (() => {
     /* Checkout button */
     document.querySelector('.js-checkout')?.addEventListener('click', () => {
       if (state.cart.length === 0) {
-        showToast('Seu carrinho está vazio.', 'error');
+        showToast('Sua sacola está vazia.', 'error');
         return;
       }
       showToast('Redirecionando para o pagamento...', 'info');
@@ -617,7 +617,7 @@ const StrideApp = (() => {
   function init() {
     // Carregar dados do usuário se estiver logado
     loadUserData();
-    
+
     bindGlobalEvents();
     initSizeSelection();
     initDetailActions();
